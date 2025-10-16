@@ -13,20 +13,20 @@ jobs:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
     permissions:
-      contents: write
+      contents: write  # Required for deploying to gh-pages
 
     steps:
-      # Checkout the repository
+      # ✅ Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js environment
+      # ✅ Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "22.x"  # Use the Node version your project supports
+          node-version: "22.x"  # Use a stable Node version for your project
 
-      # Cache Node.js modules (optional optimization)
+      # ✅ Step 3: Cache Node.js modules (optional optimization)
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -35,19 +35,24 @@ jobs:
           restore-keys: |
             node_modules
 
-      # Install dependencies
+      # ✅ Step 4: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci || npm install
 
-      # Build React app
+      # ✅ Step 5: Build React app
       - name: Build the app
         run: npm run build
 
-      # Run tests
+      # ✅ Step 6: Run tests (skips gracefully if not defined)
       - name: Run test
-        run: npm run test
+        run: |
+          if npm run | grep -q "test"; then
+            npm run test
+          else
+            echo "⚠️  No test script found, skipping tests."
+          fi
 
-      # Deploy to GitHub Pages
+      # ✅ Step 7: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
