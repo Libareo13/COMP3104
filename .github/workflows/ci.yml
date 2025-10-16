@@ -12,6 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
+    permissions:
+      contents: write
+
     steps:
       # Checkout the repository
       - name: Checkout code
