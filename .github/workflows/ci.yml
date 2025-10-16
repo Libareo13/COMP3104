@@ -4,9 +4,9 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🎯
 
 on:
   push:
-    branches: ["main"]  # Runs on push to main branch
+    branches: ["master"]  # Runs on push to master branch
   pull_request:
-    branches: ["main"]  # Optional: also runs when PRs are made to main
+    branches: ["master"]  # Also runs when PRs are made to master
 
 jobs:
   build:
