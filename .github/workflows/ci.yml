@@ -3,8 +3,10 @@ name: Deploy React App COMP3104 DevOps Project CI 🚀
 run-name: ${{ github.actor }} is testing out GitHub Actions 🎯
 
 on:
+  push:
+    branches: ["main"]  # Runs on push to main branch
   pull_request:
-    branches: ["main"]  # Adjust this to your main branch name if necessary
+    branches: ["main"]  # Optional: also runs when PRs are made to main
 
 jobs:
   build:
@@ -19,9 +21,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "22.x"  # Use the appropriate Node.js version for your project
+          node-version: "22.x"  # Use the Node version your project supports
 
-      # Cache Node.js modules
+      # Cache Node.js modules (optional optimization)
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -48,6 +50,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          publish_branch: gh-pages  # Adjust if you use a different branch for GitHub Pages
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
